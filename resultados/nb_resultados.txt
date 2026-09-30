@@ -1,0 +1,41 @@
+======================================================================
+RESULTADOS - NAIVE BAYES (MultinomialNB)
+======================================================================
+
+Dataset: Suicide_Detection.csv
+Total de amostras: 232,011
+Treino: 185,608 | Teste: 46,403
+Vocabulário TF-IDF: 50,000 termos
+
+Hiperparâmetros:
+  alpha (Laplace smoothing): 1.0
+  TF-IDF max_features: 50000
+  TF-IDF ngram_range: (1, 2)
+  TF-IDF min_df: 2 | max_df: 0.95
+
+Métricas:
+  Acurácia:  0.9189
+  Precisão:  0.8945
+  Recall:    0.9499
+  F1-Score:  0.9214
+  AUC-ROC:   0.9766
+
+Tempos:
+  Vetorização TF-IDF: 41.62s
+  Treinamento: 0.07s
+  Predição: 0.04s
+
+Matriz de Confusão:
+  TN=20,598  FP=2,599
+  FN=1,163  TP=22,043
+
+Classification Report:
+              precision    recall  f1-score   support
+
+ non-suicide       0.95      0.89      0.92     23197
+     suicide       0.89      0.95      0.92     23206
+
+    accuracy                           0.92     46403
+   macro avg       0.92      0.92      0.92     46403
+weighted avg       0.92      0.92      0.92     46403
+

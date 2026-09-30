@@ -1,0 +1,36 @@
+======================================================================
+RELATÓRIO COMPARATIVO — 3 MODELOS DE CLASSIFICAÇÃO
+Dataset: Suicide_Detection.csv (Detecção de Suicídio)
+======================================================================
+
+TABELA COMPARATIVA DE MÉTRICAS
+──────────────────────────────────────────────────────────────────────
+Métrica         |  Naive Bayes |          SVM |  Random Forest
+──────────────────────────────────────────────────────────────────────
+Acurácia        |       0.9189 |       0.9394 |         0.8990
+Precisão        |       0.8945 |       0.9426 |         0.8880
+Recall          |       0.9499 |       0.9357 |         0.9133
+F1-Score        |       0.9214 |       0.9391 |         0.9005
+AUC-ROC         |       0.9766 |       0.9836 |         0.9603
+──────────────────────────────────────────────────────────────────────
+
+TEMPOS DE EXECUÇÃO
+──────────────────────────────────────────────────────────────────────
+  Naive Bayes    : Treino=0.07s | Predição=0.04s
+  SVM            : Treino=13.26s | Predição=0.08s
+  Random Forest  : Treino=287.49s | Predição=4.67s
+
+ANÁLISE DE ERROS
+──────────────────────────────────────────────────────────────────────
+  Naive Bayes    : FP=2,599 | FN=1,163 | Total Erros= 3,762
+  SVM            : FP=1,323 | FN=1,491 | Total Erros= 2,814
+  Random Forest  : FP=2,674 | FN=2,011 | Total Erros= 4,685
+
+MELHOR MODELO POR MÉTRICA
+──────────────────────────────────────────────────────────────────────
+  Acurácia       : SVM (0.9394)
+  Precisão       : SVM (0.9426)
+  Recall         : Naive Bayes (0.9499)
+  F1-Score       : SVM (0.9391)
+  AUC-ROC        : SVM (0.9836)
+

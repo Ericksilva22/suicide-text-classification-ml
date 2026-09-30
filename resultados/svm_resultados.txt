@@ -1,0 +1,44 @@
+======================================================================
+RESULTADOS - SVM (LinearSVC + CalibratedClassifierCV)
+======================================================================
+
+Dataset: Suicide_Detection.csv
+Total de amostras: 232,011
+Treino: 185,608 | Teste: 46,403
+Vocabulário TF-IDF: 50,000 termos
+
+Hiperparâmetros:
+  C (regularização): 1.0
+  max_iter: 10000
+  class_weight: balanced
+  Calibração: CalibratedClassifierCV(cv=5, method='sigmoid')
+  TF-IDF max_features: 50000
+  TF-IDF ngram_range: (1, 2)
+  TF-IDF min_df: 2 | max_df: 0.95
+
+Métricas:
+  Acurácia:  0.9394
+  Precisão:  0.9426
+  Recall:    0.9357
+  F1-Score:  0.9391
+  AUC-ROC:   0.9836
+
+Tempos:
+  Vetorização TF-IDF: 41.40s
+  Treinamento: 13.26s
+  Predição: 0.08s
+
+Matriz de Confusão:
+  TN=21,874  FP=1,323
+  FN=1,491  TP=21,715
+
+Classification Report:
+              precision    recall  f1-score   support
+
+ non-suicide       0.94      0.94      0.94     23197
+     suicide       0.94      0.94      0.94     23206
+
+    accuracy                           0.94     46403
+   macro avg       0.94      0.94      0.94     46403
+weighted avg       0.94      0.94      0.94     46403
+

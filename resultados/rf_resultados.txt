@@ -1,0 +1,68 @@
+======================================================================
+RESULTADOS - RANDOM FOREST
+======================================================================
+
+Dataset: Suicide_Detection.csv
+Total de amostras: 232,011
+Treino: 185,608 | Teste: 46,403
+Vocabulário TF-IDF: 50,000 termos
+
+Hiperparâmetros:
+  n_estimators: 200
+  max_depth: None (sem limite)
+  min_samples_split: 5
+  min_samples_leaf: 2
+  max_features: sqrt
+  class_weight: balanced
+  TF-IDF max_features: 50000
+  TF-IDF ngram_range: (1, 2)
+  TF-IDF min_df: 2 | max_df: 0.95
+
+Métricas:
+  Acurácia:  0.8990
+  Precisão:  0.8880
+  Recall:    0.9133
+  F1-Score:  0.9005
+  AUC-ROC:   0.9603
+
+Tempos:
+  Vetorização TF-IDF: 40.61s
+  Treinamento: 287.49s
+  Predição: 4.67s
+
+Matriz de Confusão:
+  TN=20,523  FP=2,674
+  FN=2,011  TP=21,195
+
+Classification Report:
+              precision    recall  f1-score   support
+
+ non-suicide       0.91      0.88      0.90     23197
+     suicide       0.89      0.91      0.90     23206
+
+    accuracy                           0.90     46403
+   macro avg       0.90      0.90      0.90     46403
+weighted avg       0.90      0.90      0.90     46403
+
+
+Top 20 Features mais importantes:
+   1. suicide                   → 0.025642
+   2. life                      → 0.024814
+   3. kill                      → 0.023968
+   4. feel                      → 0.019475
+   5. dont                      → 0.016170
+   6. die                       → 0.016131
+   7. want                      → 0.015619
+   8. just                      → 0.012707
+   9. anymore                   → 0.012027
+  10. ive                       → 0.011955
+  11. im                        → 0.011244
+  12. suicidal                  → 0.011143
+  13. end                       → 0.010797
+  14. live                      → 0.010219
+  15. going                     → 0.009742
+  16. family                    → 0.009660
+  17. dont want                 → 0.009526
+  18. know                      → 0.007491
+  19. living                    → 0.006965
+  20. years                     → 0.006948
