@@ -21,9 +21,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# ==============================================================================
+
 # 1. LEITURA DOS RESULTADOS
-# ==============================================================================
+
 
 def extrair_metricas(caminho):
     """Extrai métricas de um arquivo de resultados."""
@@ -82,9 +82,9 @@ if len(resultados) < 3:
     print("  python random_forest.py")
     exit(1)
 
-# ==============================================================================
+
 # 2. TABELA COMPARATIVA
-# ==============================================================================
+
 print("\n" + "=" * 70)
 print("TABELA COMPARATIVA")
 print("=" * 70)
@@ -113,9 +113,9 @@ for tempo_key, tempo_label in [('Tempo_Treinamento', 'Treino (s)'), ('Tempo_Pred
     rf_v = vals.get('Random Forest', 0)
     print(f"{tempo_label:<15} | {nb_v:>12.2f} | {svm_v:>12.2f} | {rf_v:>14.2f} | {melhor:>14}")
 
-# ==============================================================================
+
 # 3. GRÁFICOS COMPARATIVOS
-# ==============================================================================
+
 print("\n" + "─" * 50)
 print("Gerando gráficos comparativos...")
 
@@ -235,9 +235,8 @@ plt.savefig('resultados/comparacao_erros.png', dpi=150, bbox_inches='tight')
 plt.close()
 print("  → Salvo: resultados/comparacao_erros.png")
 
-# ==============================================================================
 # 4. SALVAR RELATÓRIO COMPARATIVO
-# ==============================================================================
+
 with open('resultados/comparacao_final.txt', 'w', encoding='utf-8') as f:
     f.write("=" * 70 + "\n")
     f.write("RELATÓRIO COMPARATIVO — 3 MODELOS DE CLASSIFICAÇÃO\n")

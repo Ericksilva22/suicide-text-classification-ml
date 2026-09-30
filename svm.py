@@ -1,8 +1,8 @@
-# ==============================================================================
+
 # Trabalho de IA Generativa - Classificação de Textos sobre Suicídio
 # Modelo 2: SVM (Support Vector Machine)
 # Dataset: Suicide_Detection.csv
-# ==============================================================================
+
 
 import sys
 import os
@@ -31,10 +31,9 @@ from sklearn.metrics import (
 warnings.filterwarnings('ignore')
 np.random.seed(42)
 
-# ==============================================================================
+
 # 1. CARREGAMENTO DOS DADOS
-# ==============================================================================
-print("=" * 70)
+
 print("MODELO: SVM (Support Vector Machine - LinearSVC)")
 print("=" * 70)
 
@@ -49,12 +48,12 @@ print(f"  → Colunas: {df.columns.tolist()}")
 print(f"  → Distribuição das classes:")
 print(f"    - suicide:     {(df['class'] == 'suicide').sum():>7,}")
 print(f"    - non-suicide: {(df['class'] == 'non-suicide').sum():>7,}")
-print(f"  → Valores ausentes: {df.isnull().sum().sum()}")
-print(f"  → Textos duplicados: {df.duplicated(subset='text').sum()}")
+print(f"   Valores ausentes: {df.isnull().sum().sum()}")
+print(f"   Textos duplicados: {df.duplicated(subset='text').sum()}")
 
-# ==============================================================================
+
 # 2. PRÉ-PROCESSAMENTO DOS TEXTOS
-# ==============================================================================
+
 print("\n[2/6] Pré-processando textos...")
 
 def limpar_texto(texto):
@@ -85,18 +84,17 @@ depois = len(df)
 print(f"  → Textos removidos por ficarem vazios: {antes - depois}")
 print(f"  → Tamanho após limpeza: {depois}")
 
-# ==============================================================================
+
 # 3. CODIFICAÇÃO DOS RÓTULOS
-# ==============================================================================
+
 print("\n[3/6] Codificando rótulos...")
 
 df['label'] = (df['class'] == 'suicide').astype(int)
 print(f"  → suicide → 1, non-suicide → 0")
 print(f"  → Distribuição: {dict(df['label'].value_counts())}")
 
-# ==============================================================================
 # 4. DIVISÃO DOS DADOS (Treino / Teste)
-# ==============================================================================
+
 print("\n[4/6] Dividindo dados em treino e teste...")
 
 X = df['text_clean']
@@ -109,14 +107,13 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-print(f"  → Treino: {len(X_train):,} amostras")
-print(f"  → Teste:  {len(X_test):,} amostras")
-print(f"  → Proporção classes treino: { dict(y_train.value_counts()) }")
-print(f"  → Proporção classes teste:  { dict(y_test.value_counts()) }")
+print(f"   Treino: {len(X_train):,} amostras")
+print(f"   Teste:  {len(X_test):,} amostras")
+print(f"   Proporção classes treino: { dict(y_train.value_counts()) }")
+print(f"   Proporção classes teste:  { dict(y_test.value_counts()) }")
 
-# ==============================================================================
 # 5. VETORIZAÇÃO TF-IDF
-# ==============================================================================
+
 print("\n[5/6] Vetorizando textos com TF-IDF...")
 
 tfidf = TfidfVectorizer(
@@ -133,14 +130,13 @@ X_train_tfidf = tfidf.fit_transform(X_train)
 X_test_tfidf = tfidf.transform(X_test)
 t_tfidf = time.time() - t0
 
-print(f"  → Vocabulário: {len(tfidf.vocabulary_):,} termos")
-print(f"  → Dimensão treino: {X_train_tfidf.shape}")
-print(f"  → Dimensão teste:  {X_test_tfidf.shape}")
-print(f"  → Tempo de vetorização: {t_tfidf:.2f}s")
+print(f"   Vocabulário: {len(tfidf.vocabulary_):,} termos")
+print(f"   Dimensão treino: {X_train_tfidf.shape}")
+print(f"   Dimensão teste:  {X_test_tfidf.shape}")
+print(f"   Tempo de vetorização: {t_tfidf:.2f}s")
 
-# ==============================================================================
 # 6. TREINAMENTO DO MODELO - SVM (LinearSVC com Calibração)
-# ==============================================================================
+
 print("\n[6/6] Treinando modelo SVM (LinearSVC com CalibratedClassifierCV)...")
 print("  → LinearSVC é escolhido por ser eficiente em alta dimensionalidade")
 print("  → CalibratedClassifierCV permite obter probabilidades para AUC-ROC")
@@ -165,13 +161,12 @@ modelo = CalibratedClassifierCV(
 t0 = time.time()
 modelo.fit(X_train_tfidf, y_train)
 t_treino = time.time() - t0
-print(f"  → Hiperparâmetros: C=1.0, max_iter=10000, class_weight='balanced'")
-print(f"  → Calibração: CalibratedClassifierCV(cv=5, method='sigmoid')")
-print(f"  → Tempo de treinamento: {t_treino:.2f}s")
+print(f"   Hiperparâmetros: C=1.0, max_iter=10000, class_weight='balanced'")
+print(f"   Calibração: CalibratedClassifierCV(cv=5, method='sigmoid')")
+print(f"   Tempo de treinamento: {t_treino:.2f}s")
 
-# ==============================================================================
 # 7. AVALIAÇÃO DO MODELO
-# ==============================================================================
+
 print("\n" + "=" * 70)
 print("RESULTADOS - SVM (LinearSVC)")
 print("=" * 70)
@@ -213,9 +208,8 @@ print(f"  FP (Falsos Positivos):      {fp:>6,}")
 print(f"  FN (Falsos Negativos):      {fn:>6,}")
 print(f"  TP (Verdadeiros Positivos): {tp:>6,}")
 
-# ==============================================================================
 # 8. GERAÇÃO DE GRÁFICOS
-# ==============================================================================
+
 print(f"\n{'─'*50}")
 print("Gerando gráficos...")
 
@@ -236,7 +230,7 @@ ax.set_title('Matriz de Confusão — SVM (LinearSVC)', fontsize=14, fontweight=
 plt.tight_layout()
 plt.savefig('resultados/svm_matriz_confusao.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("  → Salvo: resultados/svm_matriz_confusao.png")
+print("   Salvo: resultados/svm_matriz_confusao.png")
 
 # --- Gráfico 2: Curva ROC ---
 fpr, tpr, _ = roc_curve(y_test, y_prob)
@@ -279,11 +273,10 @@ ax.grid(True, alpha=0.3, axis='y')
 plt.tight_layout()
 plt.savefig('resultados/svm_metricas_classe.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("  → Salvo: resultados/svm_metricas_classe.png")
+print("   Salvo: resultados/svm_metricas_classe.png")
 
-# ==============================================================================
 # 9. SALVAR RESULTADOS EM ARQUIVO
-# ==============================================================================
+
 with open('resultados/svm_resultados.txt', 'w', encoding='utf-8') as f:
     f.write("=" * 70 + "\n")
     f.write("RESULTADOS - SVM (LinearSVC + CalibratedClassifierCV)\n")
@@ -315,7 +308,7 @@ with open('resultados/svm_resultados.txt', 'w', encoding='utf-8') as f:
     f.write(f"  FN={fn:,}  TP={tp:,}\n\n")
     f.write(f"Classification Report:\n{report}\n")
 
-print("  → Salvo: resultados/svm_resultados.txt")
+print("   Salvo: resultados/svm_resultados.txt")
 
 print(f"\n{'=' * 70}")
 print("SVM concluído com sucesso!")

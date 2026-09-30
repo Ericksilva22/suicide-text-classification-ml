@@ -1,8 +1,6 @@
-# ==============================================================================
 # Trabalho de IA Generativa - Classificação de Textos sobre Suicídio
 # Modelo 3: Random Forest
 # Dataset: Suicide_Detection.csv
-# ==============================================================================
 
 import sys
 import os
@@ -30,10 +28,10 @@ from sklearn.metrics import (
 warnings.filterwarnings('ignore')
 np.random.seed(42)
 
-# ==============================================================================
+
 # 1. CARREGAMENTO DOS DADOS
-# ==============================================================================
-print("=" * 70)
+
+
 print("MODELO: RANDOM FOREST")
 print("=" * 70)
 
@@ -43,17 +41,17 @@ df = pd.read_csv("Suicide_Detection.csv")
 if 'Unnamed: 0' in df.columns:
     df = df.drop(columns=['Unnamed: 0'])
 
-print(f"  → Dimensão do dataset: {df.shape[0]} sentenças, {df.shape[1]} colunas")
-print(f"  → Colunas: {df.columns.tolist()}")
-print(f"  → Distribuição das classes:")
+print(f"   Dimensão do dataset: {df.shape[0]} sentenças, {df.shape[1]} colunas")
+print(f"   Colunas: {df.columns.tolist()}")
+print(f"   Distribuição das classes:")
 print(f"    - suicide:     {(df['class'] == 'suicide').sum():>7,}")
 print(f"    - non-suicide: {(df['class'] == 'non-suicide').sum():>7,}")
-print(f"  → Valores ausentes: {df.isnull().sum().sum()}")
-print(f"  → Textos duplicados: {df.duplicated(subset='text').sum()}")
+print(f"   Valores ausentes: {df.isnull().sum().sum()}")
+print(f"   Textos duplicados: {df.duplicated(subset='text').sum()}")
 
-# ==============================================================================
+
 # 2. PRÉ-PROCESSAMENTO DOS TEXTOS
-# ==============================================================================
+
 print("\n[2/6] Pré-processando textos...")
 
 def limpar_texto(texto):
@@ -81,21 +79,21 @@ df['text_clean'] = df['text'].apply(limpar_texto)
 antes = len(df)
 df = df[df['text_clean'].str.len() > 0].reset_index(drop=True)
 depois = len(df)
-print(f"  → Textos removidos por ficarem vazios: {antes - depois}")
-print(f"  → Tamanho após limpeza: {depois}")
+print(f"   Textos removidos por ficarem vazios: {antes - depois}")
+print(f"   Tamanho após limpeza: {depois}")
 
-# ==============================================================================
+
 # 3. CODIFICAÇÃO DOS RÓTULOS
-# ==============================================================================
+
 print("\n[3/6] Codificando rótulos...")
 
 df['label'] = (df['class'] == 'suicide').astype(int)
-print(f"  → suicide → 1, non-suicide → 0")
-print(f"  → Distribuição: {dict(df['label'].value_counts())}")
+print(f"   suicide → 1, non-suicide → 0")
+print(f"   Distribuição: {dict(df['label'].value_counts())}")
 
-# ==============================================================================
+
 # 4. DIVISÃO DOS DADOS (Treino / Teste)
-# ==============================================================================
+
 print("\n[4/6] Dividindo dados em treino e teste...")
 
 X = df['text_clean']
@@ -108,14 +106,14 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-print(f"  → Treino: {len(X_train):,} amostras")
-print(f"  → Teste:  {len(X_test):,} amostras")
-print(f"  → Proporção classes treino: { dict(y_train.value_counts()) }")
-print(f"  → Proporção classes teste:  { dict(y_test.value_counts()) }")
+print(f"   Treino: {len(X_train):,} amostras")
+print(f"   Teste:  {len(X_test):,} amostras")
+print(f"   Proporção classes treino: { dict(y_train.value_counts()) }")
+print(f"   Proporção classes teste:  { dict(y_test.value_counts()) }")
 
-# ==============================================================================
+
 # 5. VETORIZAÇÃO TF-IDF
-# ==============================================================================
+
 print("\n[5/6] Vetorizando textos com TF-IDF...")
 
 tfidf = TfidfVectorizer(
@@ -132,14 +130,14 @@ X_train_tfidf = tfidf.fit_transform(X_train)
 X_test_tfidf = tfidf.transform(X_test)
 t_tfidf = time.time() - t0
 
-print(f"  → Vocabulário: {len(tfidf.vocabulary_):,} termos")
-print(f"  → Dimensão treino: {X_train_tfidf.shape}")
-print(f"  → Dimensão teste:  {X_test_tfidf.shape}")
-print(f"  → Tempo de vetorização: {t_tfidf:.2f}s")
+print(f"   Vocabulário: {len(tfidf.vocabulary_):,} termos")
+print(f"   Dimensão treino: {X_train_tfidf.shape}")
+print(f"   Dimensão teste:  {X_test_tfidf.shape}")
+print(f"   Tempo de vetorização: {t_tfidf:.2f}s")
 
-# ==============================================================================
+
 # 6. TREINAMENTO DO MODELO - RANDOM FOREST
-# ==============================================================================
+
 print("\n[6/6] Treinando modelo Random Forest...")
 print("  → ATENÇÃO: Random Forest em dados TF-IDF de alta dimensionalidade")
 print("    pode ser mais lento. Aguarde...")
@@ -166,11 +164,11 @@ print(f"    - min_samples_split: 5")
 print(f"    - min_samples_leaf: 2")
 print(f"    - max_features: sqrt")
 print(f"    - class_weight: balanced")
-print(f"  → Tempo de treinamento: {t_treino:.2f}s")
+print(f"   Tempo de treinamento: {t_treino:.2f}s")
 
-# ==============================================================================
+
 # 7. AVALIAÇÃO DO MODELO
-# ==============================================================================
+
 print("\n" + "=" * 70)
 print("RESULTADOS - RANDOM FOREST")
 print("=" * 70)
@@ -212,9 +210,9 @@ print(f"  FP (Falsos Positivos):      {fp:>6,}")
 print(f"  FN (Falsos Negativos):      {fn:>6,}")
 print(f"  TP (Verdadeiros Positivos): {tp:>6,}")
 
-# ==============================================================================
+
 # 8. IMPORTÂNCIA DAS FEATURES (Top 20)
-# ==============================================================================
+
 print(f"\n{'─'*50}")
 print("Top 20 features mais importantes:")
 print('─'*50)
@@ -226,9 +224,8 @@ top_indices = np.argsort(importances)[-20:][::-1]
 for i, idx in enumerate(top_indices, 1):
     print(f"  {i:>2}. {feature_names[idx]:<25} → {importances[idx]:.6f}")
 
-# ==============================================================================
 # 9. GERAÇÃO DE GRÁFICOS
-# ==============================================================================
+
 print(f"\n{'─'*50}")
 print("Gerando gráficos...")
 
@@ -292,7 +289,7 @@ ax.grid(True, alpha=0.3, axis='y')
 plt.tight_layout()
 plt.savefig('resultados/rf_metricas_classe.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("  → Salvo: resultados/rf_metricas_classe.png")
+print("   Salvo: resultados/rf_metricas_classe.png")
 
 # --- Gráfico 4: Top 20 Features mais importantes ---
 top20_names = [feature_names[i] for i in top_indices]
@@ -309,7 +306,7 @@ ax.grid(True, alpha=0.3, axis='x')
 plt.tight_layout()
 plt.savefig('resultados/rf_top_features.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("  → Salvo: resultados/rf_top_features.png")
+print("   Salvo: resultados/rf_top_features.png")
 
 # ==============================================================================
 # 10. SALVAR RESULTADOS EM ARQUIVO
@@ -350,7 +347,7 @@ with open('resultados/rf_resultados.txt', 'w', encoding='utf-8') as f:
     for i, idx in enumerate(top_indices, 1):
         f.write(f"  {i:>2}. {feature_names[idx]:<25} → {importances[idx]:.6f}\n")
 
-print("  → Salvo: resultados/rf_resultados.txt")
+print("   Salvo: resultados/rf_resultados.txt")
 
 print(f"\n{'=' * 70}")
 print("Random Forest concluído com sucesso!")
