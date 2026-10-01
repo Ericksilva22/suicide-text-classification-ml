@@ -47,17 +47,33 @@ Texto bruto → Limpeza → TF-IDF (50k features, uni+bigramas) → Modelo → P
 
 ## 🚀 Como Executar
 
-### 1. Instalar dependências
+### 1. Criar e ativar o ambiente virtual
+
+```bash
+python -m venv .venv
+```
+
+- **Windows:**
+```bash
+.venv\Scripts\activate
+```
+
+- **Linux/macOS:**
+```bash
+source .venv/bin/activate
+```
+
+### 2. Instalar dependências
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Baixar o dataset
+### 3. Baixar o dataset
 
 Baixe o arquivo `Suicide_Detection.csv` do [Kaggle](https://www.kaggle.com/datasets/nikhileswarkomati/suicide-watch) e coloque na raiz do projeto.
 
-### 3. Executar os modelos
+### 4. Executar os modelos
 
 ```bash
 # Análise exploratória

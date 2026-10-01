@@ -12,6 +12,7 @@ build/
 *.egg
 
 # === Ambiente virtual ===
+.venv/
 venv/
 env/
 .env/
